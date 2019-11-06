@@ -14,8 +14,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import java.io.File;
@@ -23,31 +21,31 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 import static android.os.Environment.getExternalStoragePublicDirectory;
 
 
 public class MainActivity extends AppCompatActivity {
 
-
-    private ImageView imageViewCapturada;
-    private Button buttonCapturar;
+    @BindView(R.id.imageViewImagemCaputrada)
+    ImageView imageViewCapturada;
     private String caminhoArquivo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         if (Build.VERSION.SDK_INT >= 23){
             requestPermissions(new String[] {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
         }
-        buttonCapturar = findViewById(R.id.buttonCapturar);
-        buttonCapturar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                capturar();
-            }
-        });
-        imageViewCapturada = findViewById(R.id.imageViewImagemCaputrada);
+    }
+
+    @OnClick(R.id.buttonCapturar) void abrirCamera(){
+        capturar();
     }
 
     private void capturar() {
